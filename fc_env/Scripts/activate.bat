@@ -1,6 +1,6 @@
 @echo off
 
-set "VIRTUAL_ENV=C:\python_django_intensive\fc_env"
+set "VIRTUAL_ENV=C:\python_django_intensive\python_django_intensive\fc_env"
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"

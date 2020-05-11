@@ -46,7 +46,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV='C:\python_django_intensive\fc_env'
+VIRTUAL_ENV='C:\python_django_intensive\python_django_intensive\fc_env'
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

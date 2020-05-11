@@ -28,7 +28,7 @@ def _deactivate(args):
 _deactivate(["nondestructive"])
 aliases["deactivate"] = _deactivate
 
-$VIRTUAL_ENV = r"C:\python_django_intensive\fc_env"
+$VIRTUAL_ENV = r"C:\python_django_intensive\python_django_intensive\fc_env"
 
 $_OLD_VIRTUAL_PATH = $PATH
 $PATH = $PATH[:]
