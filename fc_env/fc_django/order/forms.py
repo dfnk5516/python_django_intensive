@@ -2,7 +2,6 @@ from django import forms
 from .models import Order
 from product.models import Product
 from fcuser.models import Fcuser
-from django.db import transaction
 
 class Registerform(forms.Form):
 
@@ -26,22 +25,11 @@ class Registerform(forms.Form):
     cleaned_data = super().clean()
     quantity = cleaned_data.get('quantity')
     product = cleaned_data.get('product')
-    fcuser = self.request.session.get('user')
+    # views에서 처리하는걸로 변경 > code refactoring
+    # fcuser = self.request.session.get('user')
     
 
-    if quantity and product and fcuser:
-      with transaction.atomic():
-        prod = Product.objects.get(pk=product)
-        order = Order(
-          quantity=quantity,
-          product = Product.objects.get(pk=product),
-          fcuser = Fcuser.objects.get(email=fcuser)
-        )
-        order.save()
-        prod.stock -= int(quantity)
-        prod.save()
-    else:
-      self.product = product # 실패했을경우 다시 product/:product 하기 위해 전달 > order.views 참고
+    if not (quantity and product):
       self.add_error('quantity', '값이 없습니다')
       self.add_error('product', '값이 없습니다')
 
