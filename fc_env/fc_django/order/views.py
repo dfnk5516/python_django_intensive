@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
 from django.views.generic import ListView
+from django.utils.decorators import method_decorator
+from fcuser.decorators import login_required
 from .forms import Registerform
 from .models import Order
 # Create your views here.
 
+@method_decorator(login_required, name='dispatch')
 class OrderCreate(FormView):
   form_class = Registerform
   success_url = '/product/'
@@ -22,6 +25,7 @@ class OrderCreate(FormView):
     })
     return kw
 
+@method_decorator(login_required, name='dispatch')
 class OrderList(ListView):
   # model = Order # 자신이 주문한것만 보이게 하기위해 filter 적용(하단의 get_queryset > session 접근하기위해 사용하는 함수)
   template_name = 'order.html'
