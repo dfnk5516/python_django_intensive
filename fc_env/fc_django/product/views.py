@@ -2,12 +2,34 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormView
 from django.utils.decorators import method_decorator
+from rest_framework import generics
+from rest_framework import mixins
+
 from fcuser.decorators import admin_required
 from .models import Product
 from .forms import Registerform
+from .serializers import ProductSerializer
 from order.forms import Registerform as OrderForm
 
 # Create your views here.
+
+class ProductListAPI(generics.GenericAPIView, mixins.ListModelMixin):
+  serializer_class = ProductSerializer
+
+  def get_queryset(self):
+    return Product.objects.all().order_by('id')
+
+  def get(self, request, *args, **kwargs):
+    return self.list(request, *args, **kwargs) #자동으로 list 가져오고 json 변환해줌
+
+class ProductDetailAPI(generics.GenericAPIView, mixins.RetrieveModelMixin): #상세보기를 위한 mixin
+  serializer_class = ProductSerializer
+
+  def get_queryset(self):
+    return Product.objects.all().order_by('id')
+
+  def get(self, request, *args, **kwargs):
+    return self.retrieve(request, *args, **kwargs) # queryset 에서 pk 일치하는거 찾아서 반환
 
 class ProductList(ListView):
   model = Product
